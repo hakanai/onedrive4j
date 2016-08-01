@@ -62,7 +62,7 @@ public class OneDriveFileSystemProvider extends FileSystemProvider {
 
     @Override
     public DirectoryStream<Path> newDirectoryStream(Path dir, DirectoryStream.Filter<? super Path> filter) throws IOException {
-        throw new NotImplementedException();
+        return new OneDriveDirectoryStream((OneDrivePath) dir, filter);
     }
 
     @Override

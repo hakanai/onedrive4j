@@ -1,6 +1,7 @@
 package com.palash.onedrive4j;
 
 import com.nickdsantos.onedrive4j.DriveItem;
+import com.nickdsantos.onedrive4j.OneDrive;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
@@ -24,6 +25,10 @@ public class OneDrivePath implements Path {
     public OneDrivePath(FileSystem fs, DriveItem driveItem) {
         this.fs = fs;
         this.driveItem = driveItem;
+    }
+
+    public OneDrive getOneDrive() {
+        return ((OneDriveFileSystemProvider) fs.provider()).getOneDrive();
     }
 
     @Override
