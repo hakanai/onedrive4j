@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/palashbhowmick/onedrive4j.svg?branch=master)](https://travis-ci.org/palashbhowmick/onedrive4j)
+
 # OneDrive4J
 
 ## Introduction
