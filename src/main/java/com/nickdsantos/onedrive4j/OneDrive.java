@@ -170,12 +170,12 @@ public class OneDrive {
 
 			Map<Object, Object> rawResponse = httpClient.execute(httpPost, new OneDriveJsonToMapResponseHandler());
 
-			if (rawResponse.containsKey("error")) {
-				throw new IOException(rawResponse.get("error") + " : " +
-				                      rawResponse.get("error_description"));
-			}
-
 			if (rawResponse != null) {
+				if (rawResponse.containsKey("error")) {
+					throw new IOException(rawResponse.get("error") + " : " +
+							rawResponse.get("error_description"));
+				}
+
 				accessToken = new AccessToken(
 						rawResponse.get("token_type").toString(),
 						(int) Double.parseDouble(rawResponse.get("expires_in").toString()),
