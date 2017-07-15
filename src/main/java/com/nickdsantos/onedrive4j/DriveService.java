@@ -16,7 +16,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A service for accessing the OneDrive files.
@@ -56,9 +57,10 @@ public class DriveService {
             throw new IllegalStateException("Invalid drives path", e);
         }
 
+        String rawResponse = null;
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(uri);
-            String rawResponse = httpClient.execute(httpGet, new OneDriveStringResponseHandler());
+            rawResponse = httpClient.execute(httpGet, new OneDriveStringResponseHandler());
 
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Drive[].class, new ResponseValueDeserializer<>(Drive[].class))
@@ -66,7 +68,7 @@ public class DriveService {
 
             return Arrays.asList(gson.fromJson(rawResponse, Drive[].class));
         } catch (Exception e) {
-            throw new IOException("Error getting drives", e);
+            throw new IOException("Error getting drives: " + rawResponse, e);
         }
     }
 
@@ -149,8 +151,8 @@ public class DriveService {
     /**
      * Downloads the content for an item.
      *
-     * @param accessToken the access token.
-     * @param driveItem   the item.
+     * @param accessToken  the access token.
+     * @param driveItem    the item.
      * @param outputStream the stream to write to.
      * @throws IOException if an error occurs.
      */
@@ -175,8 +177,7 @@ public class DriveService {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(uri);
-            try (InputStream inputStream = httpClient.execute(httpGet).getEntity().getContent())
-            {
+            try (InputStream inputStream = httpClient.execute(httpGet).getEntity().getContent()) {
                 IOUtils.copyLarge(inputStream, outputStream, new byte[0x10000]);
             }
         } catch (Exception e) {

@@ -35,7 +35,7 @@ public class AlbumOperationsExample extends BaseSample {
 			String code = scanner.nextLine();
 			
 			AccessToken token = oneDrive.getAccessToken(code);
-			System.out.println("AuthenticationToken: " + token.getAuthenticationToken());
+//			System.out.println("AuthenticationToken: " + token.getAuthenticationToken());
 			System.out.println("AccessToken: " + token.getAccessToken());
 			
 			System.out.println("==============");

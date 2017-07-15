@@ -33,14 +33,14 @@ public class DriveOperationsExample extends BaseSample {
 			System.out.print("READ:: OneDrive Drives");
 			List<Drive> drives = driveService.getDrives(token.getAccessToken());
 			for (Drive d : drives) {
-				System.out.println(d.toString());
+				System.out.println(d.quota);
 			}
 
 			System.out.println("==============");
 			System.out.print("READ:: OneDrive Drive Items");
 			List<DriveItem> items = driveService.getRootItems(token.getAccessToken(), drives.get(0).id);
 			for (DriveItem i : items) {
-				System.out.println(i.toString());
+				System.out.println(i.name);
 			}
 
 			scanner.close();					

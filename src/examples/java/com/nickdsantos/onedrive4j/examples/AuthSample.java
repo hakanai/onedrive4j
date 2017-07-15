@@ -33,7 +33,7 @@ public class AuthSample extends BaseSample {
 			Scanner scanner = new Scanner(System.in);
 			String code = scanner.nextLine();
 			AccessToken token = oneDrive.getAccessToken(code);
-			System.out.println("AuthenticationToken: " + token.getAuthenticationToken());
+//			System.out.println("AuthenticationToken: " + token.getAuthenticationToken());
 			System.out.println("AccessToken: " + token.getAccessToken());
 			scanner.close();
 		} catch (IOException e) {
