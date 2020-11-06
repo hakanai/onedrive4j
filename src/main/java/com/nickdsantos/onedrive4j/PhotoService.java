@@ -283,7 +283,7 @@ public class PhotoService {
 				
 				// Get embedded images JSON array
 				List<Map<Object, Object>> imageMapList = (List<Map<Object, Object>>) responseMap.get("images");
-				List<ImageItem> images = new ArrayList<ImageItem>();
+				List<ImageItem> images = new ArrayList<>();
 				for (Map<Object, Object> imageMap : imageMapList) {
 					ImageItem image = new ImageItem();
 					image.setHeight((double) imageMap.get("height"));

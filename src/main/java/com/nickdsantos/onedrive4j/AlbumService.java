@@ -40,7 +40,7 @@ public class AlbumService {
 	protected AlbumService() {}
 	
 	public Album[] getAlbums(String accessToken) throws IOException {
-		ArrayList<Album> albums = new ArrayList<Album>();
+		ArrayList<Album> albums = new ArrayList<>();
 		URI uri;
 		try {			
 			uri = new URIBuilder()
