@@ -20,7 +20,7 @@ public class Resource {
 		PeopleWithLink("People with a link");
 		
 		private final String _val;
-		private SharedWith(String val) {
+		SharedWith(String val) {
 			_val = val;			
 		}
 		
