@@ -112,20 +112,7 @@ public class AlbumService {
 		}
 
 		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-			Map<String, String> params = new HashMap<>();
-			params.put("name", name);
-			params.put("description", description);
-
-			Gson gson = new GsonBuilder().create();
-			String jsonString = gson.toJson(params);
-			StringEntity jsonEntity = new StringEntity(jsonString);
-			jsonEntity.setContentType(new BasicHeader("Content-Type", "application/json"));
-
-			HttpPost httpPost = new HttpPost(uri);
-			httpPost.setHeader("Authorization", "Bearer " + accessToken);
-			httpPost.setEntity(jsonEntity);
-
-			Map<Object, Object> rawResponse = httpClient.execute(httpPost, new OneDriveJsonToMapResponseHandler());
+			Map<Object, Object> rawResponse = executeRequest(httpClient, uri, name, description, accessToken);
 			if (rawResponse != null) {
 				if (rawResponse.containsKey("error")) {
 					Map<Object, Object> errorBody = (Map<Object, Object>) rawResponse.get("error");
@@ -191,20 +178,7 @@ public class AlbumService {
 		}
 
 		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-			Map<String, String> params = new HashMap<>();
-			params.put("name", name);
-			params.put("description", description);
-
-			Gson gson = new GsonBuilder().create();
-			String jsonString = gson.toJson(params);
-			StringEntity jsonEntity = new StringEntity(jsonString);
-			jsonEntity.setContentType(new BasicHeader("Content-Type", "application/json"));
-
-			HttpPost httpPost = new HttpPost(uri);
-			httpPost.setHeader("Authorization", "Bearer " + accessToken);
-			httpPost.setEntity(jsonEntity);
-
-			Map<Object, Object> rawResponse = httpClient.execute(httpPost, new OneDriveJsonToMapResponseHandler());
+			Map<Object, Object> rawResponse = executeRequest(httpClient, uri, name, description, accessToken);
 			if (rawResponse != null) {
 				updatedAlbum = createAlbumFromMap(rawResponse);
 				// Do not get the updated id. revert to the original prior to the update
@@ -214,7 +188,7 @@ public class AlbumService {
 	
 		return updatedAlbum;
 	}
-	
+
 	private Album createAlbumFromMap(Map<Object, Object> responseMap) {
 		SimpleDateFormat dtFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ssZ");		
 		Album album;
@@ -245,5 +219,25 @@ public class AlbumService {
 		}
 		
 		return album;
+	}
+
+	private Map<Object, Object> executeRequest(CloseableHttpClient httpClient, URI uri,
+								String name, String description, String accessToken)
+			throws IOException {
+
+		Map<String, String> params = new HashMap<>();
+		params.put("name", name);
+		params.put("description", description);
+
+		Gson gson = new GsonBuilder().create();
+		String jsonString = gson.toJson(params);
+		StringEntity jsonEntity = new StringEntity(jsonString);
+		jsonEntity.setContentType(new BasicHeader("Content-Type", "application/json"));
+
+		HttpPost httpPost = new HttpPost(uri);
+		httpPost.setHeader("Authorization", "Bearer " + accessToken);
+		httpPost.setEntity(jsonEntity);
+
+		return httpClient.execute(httpPost, new OneDriveJsonToMapResponseHandler());
 	}
 }
