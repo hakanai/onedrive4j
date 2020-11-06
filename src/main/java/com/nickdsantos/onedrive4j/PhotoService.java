@@ -270,7 +270,7 @@ public class PhotoService {
 			}
 		}
 		
-		SimpleDateFormat dtFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ssZ");	
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 		Photo photo = null;
 		if (responseMap.get("type").equals("photo")) {
 			try {

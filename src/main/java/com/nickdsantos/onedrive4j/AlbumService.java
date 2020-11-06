@@ -193,7 +193,7 @@ public class AlbumService {
 	}
 
 	private Album createAlbumFromMap(Map<Object, Object> responseMap) {
-		SimpleDateFormat dtFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ssZ");		
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 		Album album;
 		try {
 			@SuppressWarnings("unchecked")
