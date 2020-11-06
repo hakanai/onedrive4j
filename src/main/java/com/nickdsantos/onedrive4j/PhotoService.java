@@ -4,6 +4,12 @@
 
 package com.nickdsantos.onedrive4j;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nickdsantos.onedrive4j.Resource.SharedWith;
@@ -18,12 +24,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 /**
  * @author Nick DS (me@nickdsantos.com)
  *
@@ -34,6 +34,8 @@ public class PhotoService {
 	public static final String API_HOST = "apis.live.net/v5.0";
 	public static final String DEFAULT_SCHEME = "https";	
 	public static final String ALBUM_URL_PATH = "/me/albums";
+	private static final Photo[] NO_PHOTOS = new Photo[0];
+	private static final ImageItem[] NO_IMAGE_ITEMS = new ImageItem[0];
 	
 	/**
 	 * This class should only be instantiated from the OneDrive.getPhotoService() method.
@@ -80,7 +82,7 @@ public class PhotoService {
 			throw new IOException("Error getting photos, album: " + albumId, e);
 		}
 		
-		return photos.toArray(new Photo[photos.size()]);
+		return photos.toArray(NO_PHOTOS);
 	}
 	
 	/**
@@ -324,7 +326,7 @@ public class PhotoService {
 				photo.setLink((String) responseMap.get("picture"));
 				photo.setLink((String) responseMap.get("source"));
 				photo.setUploadLocation((String) responseMap.get("upload_location"));
-				photo.setImages(images.toArray(new ImageItem[images.size()]));
+				photo.setImages(images.toArray(NO_IMAGE_ITEMS));
 				photo.setLink((String) responseMap.get("link"));	
 				if (responseMap.get("when_taken") != null)
 					photo.setWhenTaken(dtFormat.parse((String) responseMap.get("when_taken")));

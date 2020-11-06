@@ -4,6 +4,15 @@
 
 package com.nickdsantos.onedrive4j;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nickdsantos.onedrive4j.Resource.SharedWith;
@@ -17,26 +26,18 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author Nick DS (me@nickdsantos.com)
  *
  */
 public class AlbumService {
 	static Logger logger = Logger.getLogger(AlbumService.class.getName());		
-	
+
 	public static final String API_HOST = "apis.live.net/v5.0";
 	public static final String DEFAULT_SCHEME = "https";	
 	public static final String ALBUM_URL_PATH = "/me/albums";
-	
+	private static final Album[] NO_ALBUMS = new Album[0];
+
 	protected AlbumService() {}
 	
 	public Album[] getAlbums(String accessToken) throws IOException {
@@ -69,7 +70,7 @@ public class AlbumService {
 			throw new IOException("Error getting albums", e);
 		}
 		
-		return albums.toArray(new Album[albums.size()]);
+		return albums.toArray(NO_ALBUMS);
 	}
 
 	public Album getAlbum(String accessToken, String albumId) throws IOException {
