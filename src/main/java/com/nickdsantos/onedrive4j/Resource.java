@@ -196,7 +196,7 @@ public class Resource {
 	}
 	
 	/**
-	 * @param shared_with the shared_with to set
+	 * @param sharedWith the shared_with to set
 	 */
 	public void setSharedWith(SharedWith sharedWith) {
 		_sharedWith = sharedWith;

@@ -22,8 +22,6 @@ import org.apache.http.client.ResponseHandler;
 
 /**
  * @author Nick DS (me@nickdsantos.com)
- * @param <T>
- *
  */
 public class OneDriveJsonToMapResponseHandler implements ResponseHandler<Map<Object,Object>> {
 

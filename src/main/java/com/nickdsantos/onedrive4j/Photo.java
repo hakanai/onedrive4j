@@ -208,7 +208,7 @@ public class Photo extends Resource{
 	}
 	
 	/**
-	 * @param widht the widht to set
+	 * @param width the widht to set
 	 */
 	public void setWidth(double width) {
 		_width = width;
