@@ -40,7 +40,7 @@ public class AlbumService {
 	protected AlbumService() {}
 	
 	public Album[] getAlbums(String accessToken) throws IOException {
-		ArrayList<Album> albums = new ArrayList<>();
+		List<Album> albums = new ArrayList<>();
 		URI uri;
 		try {			
 			uri = new URIBuilder()
@@ -57,6 +57,7 @@ public class AlbumService {
 			HttpGet httpGet = new HttpGet(uri);
 			Map<Object, Object> rawResponse = httpClient.execute(httpGet, new OneDriveJsonToMapResponseHandler());
 			if (rawResponse != null) {
+				@SuppressWarnings("unchecked")
 				List<Map<Object, Object>> rawResponseList = (List<Map<Object, Object>>) rawResponse.get("data");
 				if (rawResponseList != null) {
 					for (Map<Object, Object> respData : rawResponseList) {
@@ -115,6 +116,7 @@ public class AlbumService {
 			Map<Object, Object> rawResponse = executeRequest(httpClient, uri, name, description, accessToken);
 			if (rawResponse != null) {
 				if (rawResponse.containsKey("error")) {
+					@SuppressWarnings("unchecked")
 					Map<Object, Object> errorBody = (Map<Object, Object>) rawResponse.get("error");
 
 					if (errorBody.get("code").equals("resource_already_exists")) {
@@ -192,12 +194,14 @@ public class AlbumService {
 	private Album createAlbumFromMap(Map<Object, Object> responseMap) {
 		SimpleDateFormat dtFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ssZ");		
 		Album album;
-		try {			
+		try {
+			@SuppressWarnings("unchecked")
 			Map<String, String> fromUserMap = (Map<String, String>) responseMap.get("from");
 			User fromUser = new User();
 			fromUser.setId(fromUserMap.get("id").toString());
 			fromUser.setName(fromUserMap.get("name").toString());
-			
+
+			@SuppressWarnings("unchecked")
 			Map<String, String> sharedWithMap = (Map<String, String>) responseMap.get("shared_with");
 			SharedWith sharedWith = SharedWith.parse(sharedWithMap.get("access").toString());			
 			

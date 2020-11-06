@@ -48,7 +48,7 @@ public class PhotoService {
 	 * @throws IOException
 	 */
 	public Photo[] getPhotos(String accessToken, String albumId) throws IOException {
-		ArrayList<Photo> photos = new ArrayList<>();
+		List<Photo> photos = new ArrayList<>();
 		URI uri;
 		try {			
 			uri = new URIBuilder()
@@ -65,6 +65,7 @@ public class PhotoService {
 			HttpGet httpGet = new HttpGet(uri);
 			Map<Object, Object> rawResponse = httpClient.execute(httpGet, new OneDriveJsonToMapResponseHandler());
 			if (rawResponse != null) {
+				@SuppressWarnings("unchecked")
 				List<Map<Object, Object>> rawResponseList = (List<Map<Object, Object>>) rawResponse.get("data");
 				if (rawResponseList != null) {
 					for (Map<Object, Object> respData : rawResponseList) {
@@ -272,16 +273,19 @@ public class PhotoService {
 		if (responseMap.get("type").equals("photo")) {
 			try {
 				// Get embedded from JSON
+				@SuppressWarnings("unchecked")
 				Map<String, String> fromUserMap = (Map<String, String>) responseMap.get("from");
 				User fromUser = new User();
 				fromUser.setId(fromUserMap.get("id"));
 				fromUser.setName(fromUserMap.get("name"));
 				
 				// Get embedded shared_with JSON
+				@SuppressWarnings("unchecked")
 				Map<String, String> sharedWithMap = (Map<String, String>) responseMap.get("shared_with");
 				SharedWith sharedWith = SharedWith.parse(sharedWithMap.get("access"));		
 				
 				// Get embedded images JSON array
+				@SuppressWarnings("unchecked")
 				List<Map<Object, Object>> imageMapList = (List<Map<Object, Object>>) responseMap.get("images");
 				List<ImageItem> images = new ArrayList<>();
 				for (Map<Object, Object> imageMap : imageMapList) {
@@ -295,6 +299,7 @@ public class PhotoService {
 				}
 				
 				// Get embedded location JSON
+				@SuppressWarnings("unchecked")
 				Map<Object, Object> locationMap = (Map<Object, Object>) responseMap.get("location");
 				Location location = null;
 				if (locationMap != null) {
