@@ -14,7 +14,8 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -29,7 +30,7 @@ import java.util.Objects;
  *
  */
 public class OneDrive {
-	static Logger logger = Logger.getLogger(OneDrive.class.getName());
+	static Logger logger = LoggerFactory.getLogger(OneDrive.class.getName());
 	
 	private static class AlbumServiceHolder {
 		public static AlbumService _albumServiceInstance = new AlbumService();
