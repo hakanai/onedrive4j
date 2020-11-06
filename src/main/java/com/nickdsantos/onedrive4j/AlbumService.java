@@ -196,16 +196,14 @@ public class AlbumService {
 		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 		Album album;
 		try {
-			@SuppressWarnings("unchecked")
-			Map<String, String> fromUserMap = (Map<String, String>) responseMap.get("from");
+			Map<?, ?> fromUserMap = (Map<?, ?>) responseMap.get("from");
 			User fromUser = new User();
 			fromUser.setId(fromUserMap.get("id").toString());
 			fromUser.setName(fromUserMap.get("name").toString());
 
-			@SuppressWarnings("unchecked")
-			Map<String, String> sharedWithMap = (Map<String, String>) responseMap.get("shared_with");
-			SharedWith sharedWith = SharedWith.parse(sharedWithMap.get("access").toString());			
-			
+			Map<?, ?> sharedWithMap = (Map<?, ?>) responseMap.get("shared_with");
+			SharedWith sharedWith = SharedWith.parse(sharedWithMap.get("access").toString());
+
 			album = new Album();
 			album.setId(responseMap.get("id").toString());
 			album.setName(responseMap.get("name").toString());

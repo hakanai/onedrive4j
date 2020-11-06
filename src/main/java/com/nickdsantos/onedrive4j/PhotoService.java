@@ -275,22 +275,20 @@ public class PhotoService {
 		if (responseMap.get("type").equals("photo")) {
 			try {
 				// Get embedded from JSON
-				@SuppressWarnings("unchecked")
-				Map<String, String> fromUserMap = (Map<String, String>) responseMap.get("from");
+				Map<?, ?> fromUserMap = (Map<?, ?>) responseMap.get("from");
 				User fromUser = new User();
-				fromUser.setId(fromUserMap.get("id"));
-				fromUser.setName(fromUserMap.get("name"));
+				fromUser.setId(fromUserMap.get("id").toString());
+				fromUser.setName(fromUserMap.get("name").toString());
 				
 				// Get embedded shared_with JSON
-				@SuppressWarnings("unchecked")
-				Map<String, String> sharedWithMap = (Map<String, String>) responseMap.get("shared_with");
-				SharedWith sharedWith = SharedWith.parse(sharedWithMap.get("access"));		
+				Map<?, ?> sharedWithMap = (Map<?, ?>) responseMap.get("shared_with");
+				SharedWith sharedWith = SharedWith.parse(sharedWithMap.get("access").toString());
 				
 				// Get embedded images JSON array
-				@SuppressWarnings("unchecked")
-				List<Map<Object, Object>> imageMapList = (List<Map<Object, Object>>) responseMap.get("images");
+				List<?> imageMapList = (List<?>) responseMap.get("images");
 				List<ImageItem> images = new ArrayList<>();
-				for (Map<Object, Object> imageMap : imageMapList) {
+				for (Object imageMapObject : imageMapList) {
+					Map<?, ?> imageMap = (Map<?, ?>) imageMapObject;
 					ImageItem image = new ImageItem();
 					image.setHeight((double) imageMap.get("height"));
 					image.setWidth((double) imageMap.get("width"));
@@ -301,8 +299,7 @@ public class PhotoService {
 				}
 				
 				// Get embedded location JSON
-				@SuppressWarnings("unchecked")
-				Map<Object, Object> locationMap = (Map<Object, Object>) responseMap.get("location");
+				Map<?, ?> locationMap = (Map<?, ?>) responseMap.get("location");
 				Location location = null;
 				if (locationMap != null) {
 					location = new Location();
@@ -318,9 +315,9 @@ public class PhotoService {
 				photo.setDescription((String) responseMap.get("description"));
 				photo.setParentId((String) responseMap.get("parent_id"));
 				photo.setSize((double) responseMap.get("size"));
-				photo.setCommentsCount((int) ((Double) responseMap.get("comments_count")).intValue());
+				photo.setCommentsCount(((Number) responseMap.get("comments_count")).intValue());
 				photo.setCommentsEnabled((boolean) responseMap.get("comments_enabled"));
-				photo.setTagsCount((int) ((Double) responseMap.get("tags_count")).intValue());
+				photo.setTagsCount(((Number) responseMap.get("tags_count")).intValue());
 				photo.setTagsEnabled((boolean) responseMap.get("tags_enabled"));
 				photo.setIsEmbeddable((boolean) responseMap.get("is_embeddable"));
 				photo.setLink((String) responseMap.get("picture"));
