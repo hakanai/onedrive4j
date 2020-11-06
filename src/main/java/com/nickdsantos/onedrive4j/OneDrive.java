@@ -7,11 +7,11 @@ package com.nickdsantos.onedrive4j;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import org.apache.http.Consts;
 import org.apache.http.NameValuePair;
@@ -100,12 +100,12 @@ public class OneDrive {
 	public AccessToken getAccessToken(String authorizationCode) throws IOException {
 		AccessToken accessToken = null;
 
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("client_id", _clientId));
-		params.add(new BasicNameValuePair("redirect_uri", _callback));
-		params.add(new BasicNameValuePair("client_secret", _clientSecret));
-		params.add(new BasicNameValuePair("code", authorizationCode));
-		params.add(new BasicNameValuePair("grant_type", "authorization_code"));
+		List<NameValuePair> params = ImmutableList.<NameValuePair>of(
+				new BasicNameValuePair("client_id", _clientId),
+				new BasicNameValuePair("redirect_uri", _callback),
+				new BasicNameValuePair("client_secret", _clientSecret),
+				new BasicNameValuePair("code", authorizationCode),
+				new BasicNameValuePair("grant_type", "authorization_code"));
 		UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(params, Consts.UTF_8);
 
 		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
@@ -137,12 +137,12 @@ public class OneDrive {
 	public AccessToken getAccessTokenFromRefreshToken(String refreshToken) throws IOException {
 		AccessToken accessToken = null;
 
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("client_id", _clientId));
-		params.add(new BasicNameValuePair("redirect_uri", _callback));
-		params.add(new BasicNameValuePair("client_secret", _clientSecret));
-		params.add(new BasicNameValuePair("refresh_token", refreshToken));
-		params.add(new BasicNameValuePair("grant_type", "refresh_token"));
+		List<NameValuePair> params = ImmutableList.<NameValuePair>of(
+			new BasicNameValuePair("client_id", _clientId),
+			new BasicNameValuePair("redirect_uri", _callback),
+			new BasicNameValuePair("client_secret", _clientSecret),
+			new BasicNameValuePair("refresh_token", refreshToken),
+			new BasicNameValuePair("grant_type", "refresh_token"));
 		UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(params, Consts.UTF_8);
 
 		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
