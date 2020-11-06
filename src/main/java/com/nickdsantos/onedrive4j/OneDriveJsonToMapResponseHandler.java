@@ -7,9 +7,11 @@ package com.nickdsantos.onedrive4j;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.util.Map;
 
+import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -26,6 +28,8 @@ import com.google.gson.GsonBuilder;
  */
 public class OneDriveJsonToMapResponseHandler implements ResponseHandler<Map<Object,Object>> {
 
+	private static final Type MAP_TYPE = new TypeToken<Map<Object, Object>>(){}.getType();
+
 	/* (non-Javadoc)
 	 * @see org.apache.http.client.ResponseHandler#handleResponse(org.apache.http.HttpResponse)
 	 */
@@ -37,7 +41,7 @@ public class OneDriveJsonToMapResponseHandler implements ResponseHandler<Map<Obj
 		if (respEntity != null) {				
 			Gson gson = new GsonBuilder().create();
 			Reader reader = new InputStreamReader(respEntity.getContent(), Charset.forName("UTF-8"));
-			return gson.fromJson(reader, Map.class);
+			return gson.fromJson(reader, MAP_TYPE);
 		}
 		
 		return null;
