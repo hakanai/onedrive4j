@@ -201,14 +201,14 @@ public class Photo extends Resource{
 	}
 	
 	/**
-	 * @return the widht
+	 * @return the width
 	 */
 	public double getWidth() {
 		return _width;
 	}
 	
 	/**
-	 * @param width the widht to set
+	 * @param width the width to set
 	 */
 	public void setWidth(double width) {
 		_width = width;
